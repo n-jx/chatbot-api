@@ -1,1 +1,0 @@
-package cn.njx.chatebot.api.domain;
