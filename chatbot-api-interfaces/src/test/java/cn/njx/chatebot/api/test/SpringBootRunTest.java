@@ -1,5 +1,6 @@
 package cn.njx.chatebot.api.test;
 
+import cn.njx.chatebot.api.domain.ai.IOpenAi;
 import cn.njx.chatebot.api.domain.zsxq.IZsxqApi;
 import cn.njx.chatebot.api.domain.zsxq.domain.aggregates.UnAnsweredQuestionsAggregates;
 import cn.njx.chatebot.api.domain.zsxq.domain.vo.Topics;
@@ -34,6 +35,9 @@ public class SpringBootRunTest {
     @Resource
     private IZsxqApi zsxqApi;
 
+    @Resource
+    private IOpenAi openAi;
+
     private Logger logger = LoggerFactory.getLogger(SpringBootRunTest.class);
 
     @Test
@@ -52,6 +56,12 @@ public class SpringBootRunTest {
             logger.info("回答状态：{}" , flag ? "成功" : "失败");
         }
 
+    }
+
+    @Test
+    public void test_openai() throws IOException {
+         String response = openAi.doChatGpt("写一个java反射代码");
+        logger.info("测试结果：{}", response);
     }
 
 }

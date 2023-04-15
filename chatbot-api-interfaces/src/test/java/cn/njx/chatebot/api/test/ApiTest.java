@@ -1,5 +1,7 @@
 package cn.njx.chatebot.api.test;
 
+import org.apache.http.HttpClientConnection;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -12,6 +14,8 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * @description 单元测试
@@ -59,8 +63,29 @@ public class ApiTest {
             System.out.println(response.getStatusLine().getStatusCode());
         }
 
-
     }
 
+    @Test
+    public void test_chatApi () throws IOException {
+        CloseableHttpClient httpClient = HttpClientBuilder.create().setProxy(new HttpHost("127.0.0.1", 33210)).build();
+
+        HttpPost post = new HttpPost("https://api.openai.com/v1/completions");
+        post.addHeader("Content-Type", "application/json");
+        post.addHeader("Authorization", "Bearer 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");
+
+        String paramModel = "{\"model\": \"text-davinci-003\", \"prompt\": \"帮我写一个反射\", \"temperature\": 0, \"max_tokens\": 1024}";
+
+        StringEntity stringEntity = new StringEntity(paramModel, ContentType.create("text/json", "UTF-8"));
+        post.setEntity(stringEntity);
+        CloseableHttpResponse response = httpClient.execute(post);
+
+        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            String res = EntityUtils.toString(response.getEntity());
+            System.out.println(res);
+        } else {
+            System.out.println(response.getStatusLine().getStatusCode());
+        }
+
+    }
 
 }
