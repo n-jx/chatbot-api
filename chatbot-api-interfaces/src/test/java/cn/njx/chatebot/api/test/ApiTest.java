@@ -71,7 +71,7 @@ public class ApiTest {
 
         HttpPost post = new HttpPost("https://api.openai.com/v1/completions");
         post.addHeader("Content-Type", "application/json");
-        post.addHeader("Authorization", "Bearer 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");
+        post.addHeader("Authorization", "Bearer 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");
 
         String paramModel = "{\"model\": \"text-davinci-003\", \"prompt\": \"帮我写一个反射\", \"temperature\": 0, \"max_tokens\": 1024}";
 
